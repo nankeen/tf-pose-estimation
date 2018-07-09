@@ -30,7 +30,7 @@ class Human:
     """
     body_parts: list of BodyPart
     """
-    __slots__ = ('body_parts', 'pairs', 'uidx_list', 'score')
+    __slots__ = ('body_parts', 'pairs', 'uidx_list', 'score', 'points')
 
     def __init__(self, pairs):
         self.pairs = []
@@ -39,6 +39,7 @@ class Human:
         for pair in pairs:
             self.add_pair(pair)
         self.score = 0.0
+        self.points = []
 
     @staticmethod
     def _get_uidx(part_idx, idx):
@@ -118,12 +119,15 @@ class PoseEstimator:
                     continue
 
                 is_added = True
+                x_norm = float(pafprocess.get_part_x(c_idx)) / heat_mat.shape[1]
+                y_norm = float(pafprocess.get_part_y(c_idx)) / heat_mat.shape[0]
                 human.body_parts[part_idx] = BodyPart(
                     '%d-%d' % (human_id, part_idx), part_idx,
-                    float(pafprocess.get_part_x(c_idx)) / heat_mat.shape[1],
-                    float(pafprocess.get_part_y(c_idx)) / heat_mat.shape[0],
+                    x_norm,
+                    y_norm,
                     pafprocess.get_part_score(c_idx)
                 )
+                human.points.append((x_norm, y_norm))
 
             if is_added:
                 score = pafprocess.get_score(human_id)
