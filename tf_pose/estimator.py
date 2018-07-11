@@ -128,7 +128,6 @@ class PoseEstimator:
                     y_norm,
                     pafprocess.get_part_score(c_idx)
                 )
-                human.points.append((x_norm, y_norm))
                 human.points[part_idx] = (x_norm, y_norm)
 
             if is_added:
