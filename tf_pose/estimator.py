@@ -111,6 +111,7 @@ class PoseEstimator:
         humans = []
         for human_id in range(pafprocess.get_num_humans()):
             human = Human([])
+            human.points = np.empty(shape=(18, 3))
             is_added = False
 
             for part_idx in range(18):
@@ -128,6 +129,7 @@ class PoseEstimator:
                     pafprocess.get_part_score(c_idx)
                 )
                 human.points.append((x_norm, y_norm))
+                human.points[part_idx] = (x_norm, y_norm)
 
             if is_added:
                 score = pafprocess.get_score(human_id)
