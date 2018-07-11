@@ -122,13 +122,14 @@ class PoseEstimator:
                 is_added = True
                 x_norm = float(pafprocess.get_part_x(c_idx)) / heat_mat.shape[1]
                 y_norm = float(pafprocess.get_part_y(c_idx)) / heat_mat.shape[0]
+                part_score = pafprocess.get_part_score(c_idx)
                 human.body_parts[part_idx] = BodyPart(
                     '%d-%d' % (human_id, part_idx), part_idx,
                     x_norm,
                     y_norm,
-                    pafprocess.get_part_score(c_idx)
+                    part_score
                 )
-                human.points[part_idx] = (x_norm, y_norm)
+                human.points[part_idx] = (x_norm, y_norm, part_score)
 
             if is_added:
                 score = pafprocess.get_score(human_id)
