@@ -111,7 +111,7 @@ class PoseEstimator:
         humans = []
         for human_id in range(pafprocess.get_num_humans()):
             human = Human([])
-            human.points = np.empty(shape=(18, 3))
+            human.points = np.zeros(shape=(18, 3))
             is_added = False
 
             for part_idx in range(18):
